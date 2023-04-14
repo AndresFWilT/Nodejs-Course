@@ -19,7 +19,7 @@ const argv = require('yargs')
                             })
                             .check((argv, options) =>{
                               if(isNaN(argv.b)) throw 'The base must be a number';
-                              if(isNaN(argv.t)) throw 'The limit must be a number';
+                              if(isNaN(argv.t)) throw 'The top must be a number';
                               return true;
                             })
                             .argv;
