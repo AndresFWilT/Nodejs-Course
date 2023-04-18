@@ -1,18 +1,45 @@
-const http = require('http');
+const express = require('express');
+const hbs = require('hbs');
+require('dotenv').config();
 
-http.createServer((req, res) => {
+const app = express();
+const port = process.env.PORT;
 
-    res.writeHead(200, { 'Content-Type':'application/json' });
+// Handlebars
+app.set('view engine','hbs'); 
+hbs.registerPartials( __dirname + '/views/partials/', function (err) {});
 
-    const persona = {
-        id: 1,
-        nombre: 'Andres',
-        apellido: 'Wilchigod'
+// serve static content
+app.use(express.static('public'));
+
+app.get('/', (req,res) => {
+    user = {
+        name: 'Andres Willis',
+        status: 'Active'
     }
+    res.render('home', user);
+});
 
-    res.write('404 | Page not found');
+app.get('/elements', (req,res) => {
+    user = {
+        name: 'Andres Willis',
+        status: 'Active'
+    }
+    res.render('elements', user);
+});
 
-    res.end();
-}).listen(8080);
+app.get('/generic', (req,res) => {
+    user = {
+        name: 'Andres Willis',
+        status: 'Active'
+    }
+    res.render('generic', user);
+});
 
-console.log("Listening on port 8080");
+app.get('*', (req,res) => {
+    res.send('404 | Page not found');
+})
+
+app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}`);
+});
